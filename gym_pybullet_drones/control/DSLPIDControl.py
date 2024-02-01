@@ -75,7 +75,7 @@ class DSLPIDControl(BaseControl):
         self.last_pos_e = np.zeros(3)
         self.integral_pos_e = np.zeros(3)
         self.last_rpy_e = np.zeros(3)
-        self.integral_rpy_e = np.zeros(3)
+        self.integral_rpy_e = np.zeros(3) # This is just a comment
 
     ################################################################################
     
