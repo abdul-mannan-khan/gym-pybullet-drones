@@ -22,6 +22,11 @@ pip3 install -e . # if needed, `sudo apt install build-essential` to install `gc
 
 ```
 
+## Container Installation
+
+pip3 install tensorflow==2.12
+
+
 ## Use
 
 ### PID position control example
