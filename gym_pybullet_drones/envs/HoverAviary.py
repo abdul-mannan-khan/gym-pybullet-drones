@@ -15,10 +15,12 @@ class HoverAviary(BaseRLAviary):
                  physics: Physics=Physics.PYB,
                  pyb_freq: int = 240,
                  ctrl_freq: int = 30,
+                 aggregate_phy_steps: int=1,
                  gui=False,
                  record=False,
                  obs: ObservationType=ObservationType.KIN,
-                 act: ActionType=ActionType.RPM
+                 act: ActionType=ActionType.RPM,
+                 target_pos=np.array([1,1,1])
                  ):
         """Initialization of a single agent RL environment.
 
@@ -48,7 +50,7 @@ class HoverAviary(BaseRLAviary):
             The type of action space (1 or 3D; RPMS, thurst and torques, or waypoint with PID control)
 
         """
-        self.TARGET_POS = np.array([0,0,1])
+        self.TARGET_POS = target_pos
         self.EPISODE_LEN_SEC = 8
         super().__init__(drone_model=drone_model,
                          num_drones=1,
@@ -75,8 +77,12 @@ class HoverAviary(BaseRLAviary):
 
         """
         state = self._getDroneStateVector(0)
+        distance = np.linalg.norm(self.TARGET_POS - state[0:3])
+        reward = -(distance**2)  # Use square of the distance
+ 
         ret = max(0, 2 - np.linalg.norm(self.TARGET_POS-state[0:3])**4)
-        return ret
+        #return ret
+        return reward
 
     ################################################################################
     

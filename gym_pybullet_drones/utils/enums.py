@@ -35,9 +35,11 @@ class ImageType(Enum):
 class ActionType(Enum):
     """Action type enumeration class."""
     RPM = "rpm"                 # RPMS
+    DYN = "dyn"                 # Desired thrust and torques
     PID = "pid"                 # PID control
     VEL = "vel"                 # Velocity input (using PID control)
     ONE_D_RPM = "one_d_rpm"     # 1D (identical input to all motors) with RPMs
+    ONE_D_DYN = "one_d_dyn"     # 1D (identical input to all motors) with desired thrust and torques
     ONE_D_PID = "one_d_pid"     # 1D (identical input to all motors) with PID control
 
 ################################################################################
