@@ -127,8 +127,8 @@ class FlyThruGateAviary(BaseRLAviary):
         return {"answer": 42} #### Calculated by the Deep Thought supercomputer in 7.5M years
     
 # Register the environment with gymnasium
-gymnasium.register(
-    id='flythrugate-aviary-v0',
-    entry_point='flythrugate_aviary:FlyThruGateAviary',  # Adjust if placed in a different module
-    max_episode_steps=1000,  # Adjust as needed
-)
+# gymnasium.register(
+#     id='flythrugate-aviary-v0',
+#     entry_point='flythrugate_aviary:FlyThruGateAviary',  # Adjust if placed in a different module
+#     max_episode_steps=1000,  # Adjust as needed
+# )

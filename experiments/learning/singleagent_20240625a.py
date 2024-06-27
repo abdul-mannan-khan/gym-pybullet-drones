@@ -29,9 +29,9 @@ import shared_constants
 EPISODE_REWARD_THRESHOLD = -0  # Upperbound: rewards are always negative, but non-zero
 
 DEFAULT_ENV = 'flythrugate'
-DEFAULT_ALGO = 'ppo'
+DEFAULT_ALGO = 'sac'
 DEFAULT_OBS = ObservationType('kin')
-DEFAULT_ACT = ActionType('one_d_rpm')
+#DEFAULT_ACT = ActionType('one_d_rpm')
 DEFAULT_ACT = ActionType('rpm')
 DEFAULT_CPU = 1
 DEFAULT_STEPS = 35000
@@ -133,6 +133,7 @@ def run(
                      )
 
     #### Create evaluation environment #########################
+    #shared_constants.AGGR_PHY_STEPSAGGR_PHY_STEPS = 5
     if obs == ObservationType.KIN: 
         eval_env = gym.make(env_name,
                             aggregate_phy_steps=shared_constants.AGGR_PHY_STEPS,
