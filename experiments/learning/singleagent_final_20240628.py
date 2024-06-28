@@ -19,6 +19,7 @@ from stable_baselines3.td3.policies import MlpPolicy as TD3MlpPolicy, CnnPolicy 
 
 from gym_pybullet_drones.envs.HoverAviary import HoverAviary
 from gym_pybullet_drones.envs.FlyThruGateAviary import FlyThruGateAviary
+from gym_pybullet_drones.envs.FlyThruObstaclesAviary import FlyThruObstaclesAviary
 from gym_pybullet_drones.utils.Logger import Logger
 from gym_pybullet_drones.envs.MultiHoverAviary import MultiHoverAviary
 from gym_pybullet_drones.utils.utils import sync, str2bool
@@ -28,13 +29,15 @@ import shared_constants
 
 EPISODE_REWARD_THRESHOLD = -0  # Upperbound: rewards are always negative, but non-zero
 
-DEFAULT_ENV = 'flythrugate'
+# DEFAULT_ENV = 'hover'
+# DEFAULT_ENV = 'flythrugate'
+DEFAULT_ENV = 'flythruobstacles'
 DEFAULT_ALGO = 'sac'
 DEFAULT_OBS = ObservationType('kin')
 #DEFAULT_ACT = ActionType('one_d_rpm')
 DEFAULT_ACT = ActionType('rpm')
 DEFAULT_CPU = 1
-DEFAULT_STEPS = 35000
+DEFAULT_STEPS = 1500000
 DEFAULT_OUTPUT_FOLDER = 'results'
 
 def run(
@@ -79,6 +82,12 @@ def run(
                                  )
     if env_name == "flythrugate-aviary-v0":
         train_env = make_vec_env(FlyThruGateAviary,
+                                 env_kwargs=sa_env_kwargs,
+                                 n_envs=cpu,
+                                 seed=0
+                                 )
+    if env_name == "flythruobstacles-aviary-v0":
+        train_env = make_vec_env(FlyThruObstaclesAviary,
                                  env_kwargs=sa_env_kwargs,
                                  n_envs=cpu,
                                  seed=0
@@ -155,6 +164,12 @@ def run(
                                     )
         if env_name == "flythrugate-aviary-v0": 
             eval_env = make_vec_env(FlyThruGateAviary,
+                                    env_kwargs=sa_env_kwargs,
+                                    n_envs=1,
+                                    seed=0
+                                    )
+        if env_name == "flythruobstacles-aviary-v0": 
+            eval_env = make_vec_env(FlyThruObstaclesAviary,
                                     env_kwargs=sa_env_kwargs,
                                     n_envs=1,
                                     seed=0

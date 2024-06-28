@@ -24,3 +24,8 @@ register(
     id='flythrugate-aviary-v0',
     entry_point='gym_pybullet_drones.envs:FlyThruGateAviary',
 )
+
+register(
+    id='flythruobstacles-aviary-v0',
+    entry_point='gym_pybullet_drones.envs:FlyThruObstaclesAviary',
+)
