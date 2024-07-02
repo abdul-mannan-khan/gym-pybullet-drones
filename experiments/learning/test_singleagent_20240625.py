@@ -18,6 +18,7 @@ from stable_baselines3 import A2C, PPO, SAC, TD3, DDPG
 from stable_baselines3.common.evaluation import evaluate_policy
 
 from gym_pybullet_drones.envs.FlyThruGateAviary import FlyThruGateAviary
+from gym_pybullet_drones.envs.FlyThruObstaclesAviary import FlyThruObstaclesAviary
 from gym_pybullet_drones.envs.HoverAviary import HoverAviary
 from gym_pybullet_drones.envs.MultiHoverAviary import MultiHoverAviary
 
@@ -30,6 +31,7 @@ DEFAULT_OUTPUT_FOLDER = 'results'
 
 ENV_CLASSES = {
     'flythrugate': FlyThruGateAviary,
+    'flythruobstacles': FlyThruObstaclesAviary,
     'hover': HoverAviary,
     'multihov': MultiHoverAviary
 }
@@ -70,6 +72,7 @@ def run(exp, gui=DEFAULT_GUI,
             if done:
                 break
             time.sleep(1 / test_env.PYB_FREQ)  # Keep the frequency consistent
+        time.sleep(50)
         test_env.close()
 
 if __name__ == "__main__":
