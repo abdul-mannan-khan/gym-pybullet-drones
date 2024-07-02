@@ -81,6 +81,48 @@ conda activate drones
 cd gym_pybullet_drones/examples/
 python3 beta.py --num_drones 1 # check the steps in the file's docstrings to use multiple drones
 ```
+# Drone Simulation Action Types and Physics Models
+
+## Action Types
+
+In our drone simulation, we utilize a variety of action types to control drone behavior under different scenarios. Here's an overview of the action types available:
+
+- **RPM (`rpm`)**: Controls the revolutions per minute of each motor.
+- **Dynamic (`dyn`)**: Manages the desired thrust and torques applied to the drone.
+- **PID (`pid`)**: Implements Proportional-Integral-Derivative control logic to manage drone stability and responsiveness.
+- **Velocity (`vel`)**: Directly controls the drone's velocity, typically managed via PID controllers.
+- **One Dimensional RPM (`one_d_rpm`)**: Applies a uniform RPM value across all motors.
+- **One Dimensional Dynamic (`one_d_dyn`)**: Uniformly applies thrust and torque across all motors.
+- **One Dimensional PID (`one_d_pid`)**: Uses a single PID control setup across all motors, simplifying the control scheme.
+
+## Physics Models
+
+To accurately simulate physical interactions and drone dynamics, we support several physics models:
+
+- **PYB (`pyb`)**: Standard PyBullet physics.
+- **Dynamic (`dyn`)**: A more detailed dynamics model.
+- **PyBullet with Ground Effect (`pyb_gnd`)**: Enhances PyBullet with ground effect simulations.
+- **PyBullet with Drag (`pyb_drag`)**: Adds drag calculations to the physics simulations.
+- **PyBullet with Downwash (`pyb_dw`)**: Incorporates downwash effects.
+- **PyBullet with Ground Effect, Drag, and Downwash (`pyb_gnd_drag_dw`)**: Combines ground effect, drag, and downwash for a comprehensive physics simulation.
+
+## Implementation Details
+
+To implement these action types and physics models in your project, ensure you have the following dependencies:
+
+- Python 3.8 or later
+- PyBullet
+- NumPy
+
+You can set the desired action type and physics model through the simulation environment's configuration settings. This flexibility allows for extensive testing and research into different control strategies and their effects on drone behavior under varying physical conditions.
+
+## Usage
+
+```python
+from drone_env import DroneEnvironment
+
+# Initialize the environment with specific action and physics settings
+env = DroneEnvironment(action_type='pid', physics_model='pyb_gnd_drag_dw')
 
 ## Citation
 
