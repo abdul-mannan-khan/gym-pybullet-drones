@@ -1,17 +1,17 @@
 # gym-pybullet-drones
 
-This is a minimalist refactoring of the original [`gym-pybullet-drones`](https://github.com/utiasDSL/gym-pybullet-drones) repository, designed for compatibility with [`gymnasium`](https://github.com/Farama-Foundation/Gymnasium), [`stable-baselines3` 2.0](https://github.com/DLR-RM/stable-baselines3/pull/1327), and SITL [`betaflight`](https://github.com/betaflight/betaflight)/[`crazyflie-firmware`](https://github.com/bitcraze/crazyflie-firmware/).
+This is a minimalist updated/refactoring of the original [`gym-pybullet-drones`](https://github.com/utiasDSL/gym-pybullet-drones) repository, designed for compatibility with [`gymnasium`](https://github.com/Farama-Foundation/Gymnasium), [`stable-baselines3` 2.0](https://github.com/DLR-RM/stable-baselines3/pull/1327), and SITL [`betaflight`](https://github.com/betaflight/betaflight)/[`crazyflie-firmware`](https://github.com/bitcraze/crazyflie-firmware/).
 
-> **NOTE**: if you prefer to access the original codebase, presented at IROS in 2021, please `git checkout [paper|master]` after cloning the repo, and refer to the corresponding `README.md`'s.
+> **NOTE**: if you prefer to access the original codebase, presented at IROS in 2021, please see [`gym-pybullet-drones`](https://github.com/utiasDSL/gym-pybullet-drones) `git checkout [paper|master]` after cloning the repo, and refer to the corresponding `README.md`'s.
 
 <img src="gym_pybullet_drones/assets/helix.gif" alt="formation flight" width="325"> <img src="gym_pybullet_drones/assets/helix.png" alt="control info" width="425">
 
 ## Installation
 
-Tested on Intel x64/Ubuntu 22.04 and Apple Silicon/macOS 14.1.
+Tested on Intel x64/Ubuntu 22.04.
 
 ```sh
-git clone https://github.com/utiasDSL/gym-pybullet-drones.git
+git clone https://github.com/abdul-mannan-khan/gym-pybullet-drones.git
 cd gym-pybullet-drones/
 
 conda create -n drones python=3.10
