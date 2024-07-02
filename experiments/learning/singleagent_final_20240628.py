@@ -37,7 +37,7 @@ DEFAULT_OBS = ObservationType('kin')
 #DEFAULT_ACT = ActionType('one_d_rpm')
 DEFAULT_ACT = ActionType('rpm')
 DEFAULT_CPU = 1
-DEFAULT_STEPS = 10000
+DEFAULT_STEPS = 1500000
 DEFAULT_OUTPUT_FOLDER = 'results'
 
 def run(

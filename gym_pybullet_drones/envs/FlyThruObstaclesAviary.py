@@ -3,7 +3,7 @@ import numpy as np
 import pybullet as p
 import random
 import math
-
+import pkg_resources
 import gymnasium
 from gymnasium import spaces
 from gym_pybullet_drones.envs.BaseRLAviary import BaseRLAviary
@@ -42,10 +42,89 @@ class FlyThruObstaclesAviary(BaseRLAviary):
                          obs=obs,
                          act=act
                          )
+    # def _addObstacles(self):
+    #     """Add a single red cylinder to the environment at a fixed position."""
+    #     super()._addObstacles()
+
+    #     # List of fixed positions for the red cylinders
+    #     fixed_positions = [
+    #         (2, 2, 5),
+    #         (-2, -2, 5),
+    #         (3, 0, 5),
+    #         (-3, 0, 5),
+    #         (0, 3, 5),
+    #         (-2, 3, 5),
+    #         (-2, -3, 5),
+    #         (5, 4, 5)
+    #     ]
+
+    #     urdf_path = pkg_resources.resource_filename('gym_pybullet_drones', 'assets/red_cylinder.urdf')
+    #     for pos in fixed_positions:
+    #         p.loadURDF(urdf_path,
+    #                    pos,
+    #                    p.getQuaternionFromEuler([0, 0, 0]),
+    #                    physicsClientId=self.CLIENT
+    #                    )
+            
+    # def _addObstacles(self):
+    #     """Add a single red cylinder to the environment at a fixed position."""
+    #     super()._addObstacles()
+
+    #     p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/red_cylinder.urdf'),
+    #                [2, 2, 5],
+    #                p.getQuaternionFromEuler([0, 0, 0]),
+    #                physicsClientId=self.CLIENT
+    #                )
+        
+    #     p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/red_cylinder.urdf'),
+    #                [-2, -2, 5],
+    #                p.getQuaternionFromEuler([0, 0, 0]),
+    #                physicsClientId=self.CLIENT
+    #                )
+        
+    #     p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/red_cylinder.urdf'),
+    #                [3, 0, 5],
+    #                p.getQuaternionFromEuler([0, 0, 0]),
+    #                physicsClientId=self.CLIENT
+    #                )
+    #     p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/red_cylinder.urdf'),
+    #                [-3, 0, 5],
+    #                p.getQuaternionFromEuler([0, 0, 0]),
+    #                physicsClientId=self.CLIENT
+    #                )
+    #     p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/red_cylinder.urdf'),
+    #                [0, 3, 5],
+    #                p.getQuaternionFromEuler([0, 0, 0]),
+    #                physicsClientId=self.CLIENT
+    #                )
+    #     p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/red_cylinder.urdf'),
+    #                [-2, 3, 5],
+    #                p.getQuaternionFromEuler([0, 0, 0]),
+    #                physicsClientId=self.CLIENT
+    #                )
+    #     p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/red_cylinder.urdf'),
+    #                [-2, -3, 5],
+    #                p.getQuaternionFromEuler([0, 0, 0]),
+    #                physicsClientId=self.CLIENT
+    #                )
+    #     p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/red_cylinder.urdf'),
+    #                [5, 4, 5],
+    #                p.getQuaternionFromEuler([0, 0, 0]),
+    #                physicsClientId=self.CLIENT
+    #                )
+        
+        # urdf_path = pkg_resources.resource_filename('gym_pybullet_drones', 'assets/red_cylinder.urdf')
+        # fixed_position = (2, 2, 5)  # Specified fixed position for the red cylinder
+
+        # if os.path.exists(urdf_path):
+        #     p.loadURDF(urdf_path, basePosition=fixed_position, useFixedBase=False)
+        # else:
+        #     print(f"File not found: {urdf_path}")
+    
     def _addObstacles(self):
         """Add obstacles to the environment, including multiple cylinders of different colors at fixed positions."""
         super()._addObstacles()
-        base_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'assets')
+        base_path = pkg_resources.resource_filename('gym_pybullet_drones', 'assets')
         cylinder_colors = ['red', 'orange', 'green']
         cylinders = [os.path.join(base_path, f"{color}_cylinder.urdf") for color in cylinder_colors for _ in range(3)]
 
@@ -64,9 +143,16 @@ class FlyThruObstaclesAviary(BaseRLAviary):
 
         for urdf, pos in zip(cylinders, fixed_positions):
             if os.path.exists(urdf):
-                p.loadURDF(urdf, basePosition=pos, useFixedBase=False)
+                # p.loadURDF(urdf, basePosition=pos, useFixedBase=False)
+                p.loadURDF(urdf,
+                       pos,
+                       p.getQuaternionFromEuler([0, 0, 0]),
+                       physicsClientId=self.CLIENT
+                       )
+                # print(f"File loaded: {urdf}")
             else:
                 print(f"File not found: {urdf}")
+
     # ------------------------------------------------------------------#    
     #           Code For Placing Obstacles at Fixed Places 20240626    
     # ------------------------------------------------------------------#
@@ -162,7 +248,12 @@ class FlyThruObstaclesAviary(BaseRLAviary):
         state = self._getDroneStateVector(0)
         norm_ep_time = (self.step_counter / self.PYB_FREQ) / self.EPISODE_LEN_SEC
         #time_reward = -10 * np.linalg.norm(np.array([0, -2 * norm_ep_time, 0.75]) - state[0:3]) ** 2
-        return -np.linalg.norm(self.TARGET_POS - state[0:3])
+        time_penalty = -10 * norm_ep_time
+        distance_penalty = -np.linalg.norm(self.TARGET_POS - state[0:3])
+        total_reward = distance_penalty + time_penalty
+        # return -np.linalg.norm(self.TARGET_POS - state[0:3])
+        return total_reward
+    
     
 
     def _computeTerminated(self):
