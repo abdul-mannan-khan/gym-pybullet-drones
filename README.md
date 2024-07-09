@@ -29,6 +29,9 @@ python -m venv drones_env
 ```
 source drones_env/bin/activate
 ```
+Next, install the repository 
+
+```
 pip3 install --upgrade pip
 pip3 install -e . # if needed, `sudo apt install build-essential` to install `gcc` and build `pybullet`
 
