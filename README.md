@@ -191,7 +191,7 @@ pytest tests/
 -----
 > University of Toronto's [Dynamic Systems Lab](https://github.com/utiasDSL) / [Vector Institute](https://github.com/VectorInstitute) / University of Cambridge's [Prorok Lab](https://github.com/proroklab)
 
-## Developer: 
+## Contributor: 
 [Abdul Manan Khan](https://github.com/abdul-mannan-khan)
 
 Learned from YouTube Official [Tutorial](https://www.youtube.com/watch?v=i_23KUAEtUM)
