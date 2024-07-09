@@ -1,6 +1,6 @@
 # gym-pybullet-drones
 
-This is an updated repository of the original [`gym-pybullet-drones`](https://github.com/utiasDSL/gym-pybullet-drones) repository, designed for compatibility with [`gymnasium`](https://github.com/Farama-Foundation/Gymnasium), [`stable-baselines3` 2.0](https://github.com/DLR-RM/stable-baselines3/pull/1327), and SITL [`betaflight`](https://github.com/betaflight/betaflight)/[`crazyflie-firmware`](https://github.com/bitcraze/crazyflie-firmware/). The new repository does not have compatible examples of drones flying. 
+This is an updated repository of the original [`gym-pybullet-drones`](https://github.com/utiasDSL/gym-pybullet-drones), designed for compatibility with [`gymnasium`](https://github.com/Farama-Foundation/Gymnasium), [`stable-baselines3` 2.0](https://github.com/DLR-RM/stable-baselines3/pull/1327), and SITL [`betaflight`](https://github.com/betaflight/betaflight)/[`crazyflie-firmware`](https://github.com/bitcraze/crazyflie-firmware/). The new repository does not have compatible examples of drones flying. 
 
 # Main Contrbution
 My contribution to this repository is the enhancement for complex urban flight scenarios, which is implemented in the FlyThruGateAviary within the env folder. This update includes modifications to the reward function to better target the desired goals.
