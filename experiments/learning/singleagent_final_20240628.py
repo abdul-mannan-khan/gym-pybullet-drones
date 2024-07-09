@@ -29,15 +29,15 @@ import shared_constants
 
 EPISODE_REWARD_THRESHOLD = -0  # Upperbound: rewards are always negative, but non-zero
 
-# DEFAULT_ENV = 'hover'
+DEFAULT_ENV = 'hover'
 #DEFAULT_ENV = 'flythrugate'
-DEFAULT_ENV = 'flythruobstacles'
+#DEFAULT_ENV = 'flythruobstacles'
 DEFAULT_ALGO = 'sac'
 DEFAULT_OBS = ObservationType('kin')
-#DEFAULT_ACT = ActionType('one_d_rpm')
+# DEFAULT_ACT = ActionType('one_d_rpm')
 DEFAULT_ACT = ActionType('rpm')
 DEFAULT_CPU = 1
-DEFAULT_STEPS = 1500000
+DEFAULT_STEPS = 100000
 DEFAULT_OUTPUT_FOLDER = 'results'
 
 def run(

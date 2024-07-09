@@ -20,7 +20,7 @@ class HoverAviary(BaseRLAviary):
                  record=False,
                  obs: ObservationType=ObservationType.KIN,
                  act: ActionType=ActionType.RPM,
-                 target_pos=np.array([1,1,1])
+                 target_pos=np.array([4,4,4])
                  ):
         """Initialization of a single agent RL environment.
 
@@ -77,12 +77,29 @@ class HoverAviary(BaseRLAviary):
 
         """
         state = self._getDroneStateVector(0)
-        distance = np.linalg.norm(self.TARGET_POS - state[0:3])
-        reward = -(distance**2)  # Use square of the distance
+        distance_to_target = np.linalg.norm(self.TARGET_POS - state[0:3])
+
+        norm_ep_time = (self.step_counter / self.PYB_FREQ) / self.EPISODE_LEN_SEC
+        
+        time_penalty = -1 * norm_ep_time
+        # distance_to_target = np.linalg.norm(self.TARGET_POS - state[0:3])
+        distance_penalty = -1*distance_to_target
+
+                # Calculate reward
+        total_reward = distance_penalty + time_penalty
+        # Add a reward for reaching the target
+        if distance_to_target < 0.1:
+            total_reward += 350
  
-        ret = max(0, 2 - np.linalg.norm(self.TARGET_POS-state[0:3])**4)
-        #return ret
-        return reward
+        return total_reward
+
+
+
+        #reward = -(distance_to_target**2)  # Use square of the distance
+ 
+        # ret = max(0, 1500 - np.linalg.norm(self.TARGET_POS-state[0:3])**4)
+        # return ret
+        # return reward
 
     ################################################################################
     
