@@ -22,7 +22,7 @@ conda activate drones
 ```
 **Create a virtual environment**: This is a necessary isolates for your package installations from the global Python environment.
 ```
-cd gym-pybullet-drones
+# make sure that you are inside gym-pybullet-drones 
 python -m venv drones_env
 ```
 **Activate the virtual environment**
