@@ -1,6 +1,9 @@
 # gym-pybullet-drones
 
-This is a minimalist updated/refactoring of the original [`gym-pybullet-drones`](https://github.com/utiasDSL/gym-pybullet-drones) repository, designed for compatibility with [`gymnasium`](https://github.com/Farama-Foundation/Gymnasium), [`stable-baselines3` 2.0](https://github.com/DLR-RM/stable-baselines3/pull/1327), and SITL [`betaflight`](https://github.com/betaflight/betaflight)/[`crazyflie-firmware`](https://github.com/bitcraze/crazyflie-firmware/).
+This is an updated repository of the original [`gym-pybullet-drones`](https://github.com/utiasDSL/gym-pybullet-drones), designed for compatibility with [`gymnasium`](https://github.com/Farama-Foundation/Gymnasium), [`stable-baselines3` 2.0](https://github.com/DLR-RM/stable-baselines3/pull/1327), and SITL [`betaflight`](https://github.com/betaflight/betaflight)/[`crazyflie-firmware`](https://github.com/bitcraze/crazyflie-firmware/). The new repository does not have compatible examples of drones flying. 
+
+# Main Contrbution
+My contribution to this repository is the enhancement for complex urban flight scenarios, which is implemented in the FlyThruGateAviary within the env folder. This update includes modifications to the reward function to better target the desired goals.
 
 > **NOTE**: if you prefer to access the original codebase, presented at IROS in 2021, please see [`gym-pybullet-drones`](https://github.com/utiasDSL/gym-pybullet-drones) `git checkout [paper|master]` after cloning the repo, and refer to the corresponding `README.md`'s.
 
@@ -176,7 +179,7 @@ pytest tests/
 -----
 > University of Toronto's [Dynamic Systems Lab](https://github.com/utiasDSL) / [Vector Institute](https://github.com/VectorInstitute) / University of Cambridge's [Prorok Lab](https://github.com/proroklab)
 
-## Developer: 
+## Contributor: 
 [Abdul Manan Khan](https://github.com/abdul-mannan-khan)
 
 Learned from YouTube Official [Tutorial](https://www.youtube.com/watch?v=i_23KUAEtUM)

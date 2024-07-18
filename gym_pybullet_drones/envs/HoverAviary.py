@@ -52,6 +52,8 @@ class HoverAviary(BaseRLAviary):
         """
         self.TARGET_POS = target_pos
         self.EPISODE_LEN_SEC = 8
+        self.prev_distance_to_target = None
+
         super().__init__(drone_model=drone_model,
                          num_drones=1,
                          initial_xyzs=initial_xyzs,
@@ -68,29 +70,37 @@ class HoverAviary(BaseRLAviary):
     ################################################################################
     
     def _computeReward(self):
-        """Computes the current reward value.
-
-        Returns
-        -------
-        float
-            The reward.
-
-        """
         state = self._getDroneStateVector(0)
-        distance_to_target = np.linalg.norm(self.TARGET_POS - state[0:3])
+        current_distance_to_target = np.linalg.norm(self.TARGET_POS - state[0:3])
 
         norm_ep_time = (self.step_counter / self.PYB_FREQ) / self.EPISODE_LEN_SEC
         
         time_penalty = -1 * norm_ep_time
-        # distance_to_target = np.linalg.norm(self.TARGET_POS - state[0:3])
-        distance_penalty = -1*distance_to_target
+        distance_penalty = -10 * current_distance_to_target
 
-                # Calculate reward
-        total_reward = distance_penalty + time_penalty
+        # Calculate distance change reward
+        if self.prev_distance_to_target is not None:
+            distance_change = self.prev_distance_to_target - current_distance_to_target
+            if distance_change > 0:
+                # Positive reward for moving closer to the target
+                distance_change_reward = 20 * distance_change
+            else:
+                # Negative reward for moving further away from the target
+                distance_change_reward = 20 * distance_change
+        else:
+            # If prev_distance_to_target is None, it's the first step
+            distance_change_reward = 0
+
+        # Calculate total reward
+        total_reward = distance_penalty + time_penalty + distance_change_reward
+
         # Add a reward for reaching the target
-        if distance_to_target < 0.1:
+        if current_distance_to_target < 0.1:
             total_reward += 350
- 
+
+        # Update the previous distance
+        self.prev_distance_to_target = current_distance_to_target
+
         return total_reward
 
 
@@ -113,7 +123,10 @@ class HoverAviary(BaseRLAviary):
 
         """
         state = self._getDroneStateVector(0)
-        if np.linalg.norm(self.TARGET_POS-state[0:3]) < .0001:
+        if np.linalg.norm(self.TARGET_POS-state[0:3]) < 0.05:
+            print ("--------------------------------------------------")
+            print ("             The drone reached goal.              ")
+            print ("--------------------------------------------------")
             return True
         else:
             return False
@@ -130,14 +143,29 @@ class HoverAviary(BaseRLAviary):
 
         """
         state = self._getDroneStateVector(0)
-        if (abs(state[0]) > 1.5 or abs(state[1]) > 1.5 or state[2] > 2.0 # Truncate when the drone is too far away
-             or abs(state[7]) > .4 or abs(state[8]) > .4 # Truncate when the drone is too tilted
-        ):
+        
+        # Define the arena boundaries
+        ARENA_SIZE_X = 15.0
+        ARENA_SIZE_Y = 15.0
+        ARENA_SIZE_Z = 15.0
+
+        # Truncate if the drone is outside the defined arena boundaries
+        if (abs(state[0]) > ARENA_SIZE_X or abs(state[1]) > ARENA_SIZE_Y or abs(state[2]) > ARENA_SIZE_Z
+            or abs(state[7]) > .4 or abs(state[8]) > .4):  # Truncate when the drone is too tilted
+            # print ("--------------------------------------------------")
+            # print ("   The drone has gone out of working boundary.    ")
+            # print ("--------------------------------------------------")
             return True
-        if self.step_counter/self.PYB_FREQ > self.EPISODE_LEN_SEC:
+        
+        # Truncate if the episode has timed out
+        if self.step_counter / self.PYB_FREQ > self.EPISODE_LEN_SEC:
+            print ("--------------------------------------------------")
+            print ("   Time is up. Too long to reach to the goal.     ")
+            print ("--------------------------------------------------")
             return True
-        else:
-            return False
+        
+        return False
+
 
     ################################################################################
     
