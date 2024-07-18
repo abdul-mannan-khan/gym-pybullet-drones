@@ -92,7 +92,7 @@ class FlyThruObstaclesAviary(BaseRLAviary):
         if distance_to_target < 0.1:
             total_reward += 100
         # Add a penalty for hitting an obstacle
-        if min_distance_to_obstacle < 0.5:
+        if min_distance_to_obstacle < 0.05:
             total_reward -= 50
 
         return total_reward

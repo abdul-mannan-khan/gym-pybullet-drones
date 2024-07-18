@@ -17,14 +17,14 @@ cd gym-pybullet-drones/
 conda create -n drones python=3.10
 conda activate drones
 
-pip3 install --upgrade pip
-pip3 install -e . # if needed, `sudo apt install build-essential` to install `gcc` and build `pybullet`
+pip install --upgrade pip
+pip install -e . # if needed, `sudo apt install build-essential` to install `gcc` and build `pybullet`
 
 ```
 
 ## Container Installation
 
-pip3 install tensorflow==2.12
+pip install tensorflow==2.12
 
 
 ## Use

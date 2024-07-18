@@ -49,7 +49,6 @@ dependencies:
       - grpcio==1.59.2
       - gym==0.26.2
       - gym-notices==0.0.8
-      - gym-pybullet-drones==2.0.0
       - gymnasium==0.28.1
       - idna==3.4
       - imageio==2.31.6
